@@ -31,6 +31,8 @@ public class LoginTest extends BaseTest{
 
          Assert.assertTrue(driver.getCurrentUrl().contains("dashboard"));
 
+         // Testing jenkins auto trigger
+
      }
 
 }
