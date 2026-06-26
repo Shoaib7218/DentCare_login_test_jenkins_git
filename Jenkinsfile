@@ -7,22 +7,34 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout App') {
             steps {
-                git branch: 'main', url: 'https://github.com/Shoaib7218/DentCare_login_test_jenkins_git.git'
+                dir('dentcare-app') {
+                    git branch: 'main', url: 'https://github.com/Shoaib7218/DentCareProject.git'
+                }
+            }
+        }
+
+        stage('Checkout Tests') {
+            steps {
+                dir('dentcare-tests') {
+                    git branch: 'main', url: 'https://github.com/Shoaib7218/DentCare_login_test_jenkins_git.git'
+                }
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'mvn clean test'
+                dir('dentcare-tests') {
+                    bat 'mvn clean test'
+                }
             }
         }
     }
 
     post {
         always {
-            junit '**/target/surefire-reports/*.xml'
+            junit 'dentcare-tests/target/surefire-reports/*.xml'
         }
     }
 }
